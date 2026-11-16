@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AS Agency — Official Coin Seller for Duoo & Doran</title>
+  <link rel="icon" type="image/png" href="as-agency-logo.png" />
+  <style>
+    :root {
+      --bg-dark: #0e1a12;
+      --card-bg: #15261b;
+      --card-border: #2c4a34;
+      --gold: #d4af37;
+      --gold-light: #f3d778;
+      --green-btn: #1f6f3d;
+      --green-btn-hover: #278a4c;
+      --text-main: #f4f7f4;
+      --text-muted: #b5c4b8;
+      --danger: #e74c3c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(160deg, #0b140e 0%, #16291b 50%, #1c2810 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header & Hamburger Menu */
+    header {
+      background: rgba(12, 22, 15, 0.95);
+      border-bottom: 1px solid var(--gold);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand img {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      object-fit: contain;
+      border: 1.5px solid var(--gold);
+      background: #5d6e1d;
+    }
+
+    .logo-fallback {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: var(--gold-light);
+      background: linear-gradient(135deg, #274418, #5d6e1d);
+      border: 1.5px solid var(--gold);
+    }
+
+    .header-fallback {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      font-size: 1.15rem;
+    }
+
+    .hero-fallback {
+      width: 135px;
+      height: 135px;
+      border-radius: 18px;
+      font-size: 2.6rem;
+      margin: 0 auto 12px;
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.25);
+    }
+
+    .brand-text h1 {
+      font-size: 1.25rem;
+      color: var(--gold-light);
+      letter-spacing: 0.8px;
+    }
+
+    .brand-text span {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    /* 3-Line Hamburger Button */
+    .menu-btn {
+      background: transparent;
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      padding: 8px 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .menu-btn span {
+      display: block;
+      width: 24px;
+      height: 2.5px;
+      background: var(--gold-light);
+      border-radius: 2px;
+    }
+
+    /* Dropdown Drawer */
+    .nav-drawer {
+      position: fixed;
+      top: 74px;
+      right: 14px;
+      width: 250px;
+      background: #132218;
+      border: 1px solid var(--gold);
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 150;
+    }
+
+    .nav-drawer.open {
+      display: flex;
+    }
+
+    .nav-drawer button {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      color: var(--text-main);
+      padding: 14px 16px;
+      text-align: left;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .nav-drawer button:last-child {
+      border-bottom: none;
+    }
+
+    .nav-drawer button:hover {
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--gold-light);
+    }
+
+    /* Main Container */
+    main {
+      width: 100%;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+      flex: 1;
+    }
+
+    /* Hero Banner with Logo on Top */
+    .hero-banner {
+      text-align: center;
+      padding: 20px 14px;
+      background: linear-gradient(135deg, rgba(21, 38, 27, 0.95), rgba(77, 94, 24, 0.5));
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+
+    .hero-banner img {
+      width: 135px;
+      height: 135px;
+      border-radius: 18px;
+      border: 2px solid var(--gold);
+      object-fit: contain;
+      background: #5d6e1d;
+      margin-bottom: 12px;
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.28);
+    }
+
+    .hero-banner h2 {
+      color: var(--gold-light);
+      font-size: 1.55rem;
+      margin-bottom: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-banner p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Card Sections */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* User ID Verification */
+    .verify-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .verify-row input {
+      flex: 1;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+      background: #0b140e;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .verify-row input:focus {
+      border-color: var(--gold);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #c9a227, #ebd06d);
+      color: #111d13;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .btn-gold:hover {
+      opacity: 0.92;
+    }
+
+    .verify-status {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      display: none;
+    }
+
+    .verify-status.success {
+      display: block;
+      color: #4ade80;
+    }
+
+    .verify-status.error {
+      display: block;
+      color: #f87171;
+    }
+
+    /* Coin Plans Grid */
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+    }
+
+    .plan-box {
+      background: #101e15;
+      border: 1.5px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .plan-box:hover {
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .plan-box.selected {
+      border-color: var(--gold-light);
+      background: rgba(212, 175, 55, 0.16);
+      box-shadow: 0 0 14px rgba(212, 175, 55, 0.28);
+    }
+
+    .plan-coins {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .plan-label {
+      font-size: 0.78rem;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .plan-price {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #4ade80;
+    }
+
+    .mega-badge {
+      position: absolute;
+      top: -9px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: #111;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    /* Summary & Buy Button */
+    .summary-box {
+      background: #0d1811;
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 16px;
+      border: 1px dashed var(--gold);
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+
+    .terms-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 14px 0;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .btn-buy {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #1f7a3f, #2ea859);
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    .btn-buy:hover {
+      transform: scale(1.01);
+    }
+
+    /* App Download Buttons */
+    .apps-card {
+      text-align: center;
+    }
+
+    .apps-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .app-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .app-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 12px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #fff;
+      border: 1px solid var(--gold);
+      background: linear-gradient(135deg, #1b3824, #284b1c);
+      transition: 0.2s;
+    }
+
+    .app-btn:hover {
+      background: linear-gradient(135deg, #274f34, #3b6b28);
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+      background: #09110c;
+      border-top: 1px solid var(--card-border);
+      padding: 22px 16px;
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    footer strong {
+      color: var(--gold-light);
+    }
+
+    footer a {
+      color: #4ade80;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.78);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 300;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #142419;
+      border: 1.5px solid var(--gold);
+      border-radius: 16px;
+      max-width: 440px;
+      width: 100%;
+      padding: 20px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-box h3 {
+      color: var(--gold-light);
+      margin-bottom: 12px;
+      font-size: 1.15rem;
+    }
+
+    .modal-box p, .modal-box li {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      line-height: 1.55;
+      margin-bottom: 8px;
+    }
+
+    .modal-box ul {
+      padding-left: 18px;
+      margin-bottom: 12px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .btn-cancel {
+      flex: 1;
+      padding: 11px;
+      background: #2b352e;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-proceed {
+      flex: 1;
+      padding: 11px;
+      background: var(--green-btn);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .qr-card {
+      background: #ffffff;
+      color: #111;
+      padding: 14px;
+      border-radius: 14px;
+      text-align: center;
+      margin: 12px 0;
+    }
+
+    .qr-card img {
+      width: 100%;
+      max-width: 230px;
+      height: auto;
+      border-radius: 10px;
+      display: block;
+      margin: 0 auto 10px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .upi-box {
+      background: #f3f4f6;
+      border: 1px dashed #9ca3af;
+      border-radius: 8px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 0.78rem;
+      color: #111827;
+      word-break: break-all;
+    }
+
+    .btn-copy {
+      background: #15261b;
+      color: var(--gold-light);
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-upi-app {
+      display: block;
+      width: 100%;
+      padding: 11px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.92rem;
+      background: linear-gradient(135deg, #c9a227, #ebd06d);
+      color: #111d13;
+      margin-bottom: 12px;
+    }
+
+    /* UTR Input Section */
+    .utr-section {
+      background: #0d1811;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px;
+      text-align: left;
+      margin-top: 10px;
+    }
+
+    .utr-section label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      margin-bottom: 6px;
+    }
+
+    .utr-section small {
+      display: block;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .utr-section input {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 9px;
+      border: 1px solid var(--card-border);
+      background: #070e09;
+      color: #fff;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      outline: none;
+      margin-bottom: 8px;
+    }
+
+    .utr-section input:focus {
+      border-color: var(--gold);
+    }
+
+    .utr-status {
+      font-size: 0.82rem;
+      margin-bottom: 8px;
+      display: none;
+    }
+
+    .utr-status.error {
+      display: block;
+      color: #f87171;
+    }
+
+    .btn-submit-utr {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #1f7a3f, #2ea859);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-submit-utr:hover {
+      opacity: 0.95;
+    }
+
+    .utr-success-box {
+      display: none;
+      background: rgba(31, 122, 63, 0.2);
+      border: 1px solid #4ade80;
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 10px;
+      text-align: left;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .utr-success-box.active {
+      display: block;
+    }
+
+    .btn-whatsapp-fallback {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin-top: 10px;
+      padding: 10px;
+      background: #25d366;
+      color: #091b0f;
+      font-weight: 800;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.88rem;
+    }
+
+    .timer-badge {
+      display: inline-block;
+      background: #3d1818;
+      color: #ff8080;
+      border: 1px solid #e74c3c;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 480px) {
+      .app-links {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="brand">
+      <!-- Save your logo image as as-agency-logo.png (or .jpg / .jpeg) in the same folder -->
+      <img
+        src="as-agency-logo.png"
+        alt="AS Agency Logo"
+        onerror="handleLogoFallback(this, 'headerLogoFallback')"
+      />
+      <div id="headerLogoFallback" class="logo-fallback header-fallback">AS</div>
+      <div class="brand-text">
+        <h1>AS Agency</h1>
+        <span>Official Duoo & Doran Coin Seller</span>
+      </div>
+    </div>
+
+    <!-- Top Right 3-Line Menu Button -->
+    <button class="menu-btn" id="menuBtn" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <!-- Dropdown Menu Options -->
+  <nav class="nav-drawer" id="navDrawer">
+    <button onclick="scrollToCoins()">🪙 Duoo and Doran Coins</button>
+    <button onclick="openInfoModal('terms')">📜 Terms Condition</button>
+    <button onclick="openInfoModal('policy')">🔒 Policy</button>
+    <button onclick="openInfoModal('refund')">🔄 Refund Cancellation</button>
+    <button onclick="openInfoModal('contact')">🎧 Contact Us</button>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="coinsSection">
+    <!-- Hero Front Banner with Logo on Top -->
+    <div class="hero-banner">
+      <img
+        src="as-agency-logo.png"
+        alt="AS Agency Official Logo"
+        onerror="handleLogoFallback(this, 'heroLogoFallback')"
+      />
+      <div id="heroLogoFallback" class="logo-fallback hero-fallback">AS</div>
+      <h2>AS Agency</h2>
+      <p>Instant & Trusted Coin Recharge for Duoo & Doran</p>
+    </div>
+
+    <!-- User ID Verify Card -->
+    <div class="card">
+      <div class="section-title">DUOO & DORAN USER ID:</div>
+      <div class="verify-row">
+        <input type="text" id="userIdInput" placeholder="Enter your Duoo / Doran User ID" />
+        <button class="btn-gold" onclick="verifyUserId()">Verify</button>
+      </div>
+      <div id="verifyStatus" class="verify-status"></div>
+    </div>
+
+    <!-- Coin Plans Card -->
+    <div class="card">
+      <div class="section-title">SELECT COIN PLANS</div>
+      <div class="plans-grid" id="plansGrid"></div>
+
+      <div class="summary-box">
+        <div class="summary-line">
+          <span>Selected Plan:</span>
+          <strong id="selectedPlanText">None</strong>
+        </div>
+        <div class="summary-line">
+          <span>Total Amount:</span>
+          <strong id="totalAmountText" style="color:#4ade80;">₹0</strong>
+        </div>
+      </div>
+
+      <label class="terms-check">
+        <input type="checkbox" id="acceptTerms" />
+        <span>I accept all Terms & Conditions</span>
+      </label>
+
+      <button class="btn-buy" onclick="handleBuyNow()">BUY NOW</button>
+    </div>
+
+    <!-- Download Apps Section -->
+    <div class="card apps-card">
+      <div class="section-title">Duoo & Doran Apps</div>
+      <p>नीचे दिए गए लिंक से एप्लीकेशन डाउनलोड / ओपन करें</p>
+      <div class="app-links">
+        <a class="app-btn" href="https://www.duoo.live/" target="_blank" rel="noopener noreferrer">
+          📲 Download Duoo App
+        </a>
+        <a class="app-btn" href="https://www.doran.live/" target="_blank" rel="noopener noreferrer">
+          📲 Download Doran App
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div><strong>Official Coin Seller for Duoo and Doran</strong></div>
+    <div>Payment Processed by <strong>AS Agency</strong></div>
+    <div style="margin-top:8px;">
+      Support WhatsApp: <a href="https://wa.me/917080921179" target="_blank" rel="noopener noreferrer">+917080921179</a>
+    </div>
+    <div>Support Timing: 10:00 AM to 10:00 PM</div>
+  </footer>
+
+  <!-- Info Modal (Terms, Policy, Refund, Contact) -->
+  <div class="modal-overlay" id="infoModal">
+    <div class="modal-box">
+      <h3 id="infoModalTitle">Title</h3>
+      <div id="infoModalBody"></div>
+      <div class="modal-actions">
+        <button class="btn-proceed" onclick="closeModal('infoModal')">Close / बंद करें</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Instructions Modal -->
+  <div class="modal-overlay" id="instructionModal">
+    <div class="modal-box">
+      <h3>⚠️ Payment Instructions / पेमेंट निर्देश</h3>
+      <p><strong>English:</strong> A Barcode will open with a 5-minute timer and the exact payable amount. Take a Screenshot of the barcode. Open Google Pay, PhonePe, or Paytm scanner and select the Gallery option. Choose the screenshot and pay the exact amount. Return to this page, enter your 12-digit UTR number, and submit for confirmation!</p>
+      <ul>
+        <li>आगे 5 मिनट के टाइमर के साथ एक बारकोड खुलेगा।</li>
+        <li>उस बारकोड का स्क्रीनशॉट लें।</li>
+        <li>अपने Google Pay, PhonePe या Paytm का स्कैनर खोलकर गैलरी विकल्प चुनें।</li>
+        <li>स्क्रीनशॉट चुनकर सटीक रकम पे करें।</li>
+        <li>पेमेंट के बाद इसी पेज पर अपना 12-अंकों का <strong>UTR / Reference No.</strong> डालकर सबमिट करें!</li>
+      </ul>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal('instructionModal')">Cancel / रद्द करें</button>
+        <button class="btn-proceed" onclick="openQrModal()">✓ OK, Got It / आगे बढ़ें</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment QR / Timer / UTR Modal -->
+  <div class="modal-overlay" id="qrModal">
+    <div class="modal-box" style="text-align:center;">
+      <h3>Scan & Pay via Any UPI</h3>
+      <div class="timer-badge">समय शेष / Time Left: <span id="countdownText">05:00</span></div>
+      <div style="font-size:1.4rem; font-weight:800; color:#4ade80;" id="qrAmountDisplay">₹0</div>
+      <div style="font-size:0.8rem; color:#f3d778; margin-bottom:8px;">(कृपया सटीक रकम ही पे करें / Pay Exact Amount)</div>
+
+      <div class="qr-card">
+        <p style="color:#111; font-weight:800; font-size:0.95rem; margin-bottom:8px;">ARPIT SRIWASTVA • BharatPe</p>
+
+        <!-- Save your BharatPe QR image as upi-qr.png (or .jpg) in the same folder -->
+        <img id="upiQrImg" src="upi-qr.png" alt="BharatPe UPI QR - ARPIT SRIWASTVA" />
+
+        <div class="upi-box">
+          <span id="upiIdText">BHARATPE2S0V0N7A9S00732@unitype</span>
+          <button type="button" class="btn-copy" id="copyUpiBtn" onclick="copyUpiId()">Copy</button>
+        </div>
+
+        <p style="color:#374151; font-size:0.82rem; margin:8px 0 0;">
+          User ID: <strong id="qrUserIdDisplay"></strong> • Plan: <strong id="qrPlanDisplay"></strong>
+        </p>
+      </div>
+
+      <a id="upiDeepLink" class="btn-upi-app" href="#">📲 Pay Directly via UPI App</a>
+
+      <!-- UTR Submission Box -->
+      <div class="utr-section">
+        <label for="utrInput">Enter UTR / UPI Reference No.:</label>
+        <small>पेमेंट पूरा करने के बाद अपना 12-अंकों का UTR / Ref No. नीचे डालें</small>
+        <input
+          type="text"
+          id="utrInput"
+          maxlength="24"
+          placeholder="e.g. 412345678901 (12-digit UTR)"
+          autocomplete="off"
+        />
+        <div id="utrStatus" class="utr-status"></div>
+        <button type="button" class="btn-submit-utr" onclick="submitUtrPayment()">
+          ✅ Submit UTR & Confirm Payment
+        </button>
+
+        <div id="utrSuccessBox" class="utr-success-box">
+          <strong style="color:#4ade80;">✓ UTR Submitted Successfully!</strong><br />
+          <span>User ID: <strong id="confUserId"></strong></span><br />
+          <span>Plan: <strong id="confPlan"></strong> (<strong id="confAmount"></strong>)</span><br />
+          <span>UTR No.: <strong id="confUtr"></strong></span>
+          <a id="whatsappFallbackLink" class="btn-whatsapp-fallback" href="#" target="_blank" rel="noopener noreferrer">
+            📲 Send Order & Screenshot on WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <p style="font-size:0.8rem; color:#b5c4b8; margin-top:10px;">
+        पेमेंट में कोई समस्या हो तो WhatsApp पर संपर्क करें:<br />
+        <a href="https://wa.me/917080921179" target="_blank" rel="noopener noreferrer" style="color:#4ade80;">+917080921179</a>
+      </p>
+
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeQrModal()">Close / बंद करें</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const MERCHANT_UPI_ID = "BHARATPE2S0V0N7A9S00732@unitype";
+    const MERCHANT_NAME = "ARPIT SRIWASTVA";
+    const WHATSAPP_NUMBER = "917080921179";
+
+    function handleLogoFallback(img, fallbackId) {
+      const step = img.dataset.step || "png";
+      if (step === "png") {
+        img.dataset.step = "jpg";
+        img.src = "as-agency-logo.jpg";
+      } else if (step === "jpg") {
+        img.dataset.step = "jpeg";
+        img.src = "as-agency-logo.jpeg";
+      } else {
+        img.onerror = null;
+        img.style.display = "none";
+        const fb = document.getElementById(fallbackId);
+        if (fb) fb.style.display = "flex";
+      }
+    }
+
+    const coinPlans = [
+      { coins: "11,000", price: 151 },
+      { coins: "16,100", price: 220 },
+      { coins: "24,100", price: 330 },
+      { coins: "32,100", price: 440 },
+      { coins: "50,000", price: 685 },
+      { coins: "100,000", price: 1370 },
+      { coins: "146,000", price: 1999 },
+      { coins: "219,000", price: 3000 },
+      { coins: "328,500", price: 4500 },
+      { coins: "474,500", price: 6500 },
+      { coins: "657,000", price: 9000 },
+      { coins: "949,000", price: 13000, mega: true }
+    ];
+
+    let selectedPlan = null;
+    let isVerified = false;
+    let timerInterval = null;
+
+    // Render Plans
+    const plansGrid = document.getElementById("plansGrid");
+    coinPlans.forEach((plan, index) => {
+      const box = document.createElement("div");
+      box.className = "plan-box";
+      box.innerHTML = `
+        ${plan.mega ? '<div class="mega-badge">MEGA PACK</div>' : ''}
+        <div class="plan-coins">${plan.coins}</div>
+        <div class="plan-label">Coins</div>
+        <div class="plan-price">₹${plan.price.toLocaleString('en-IN')}</div>
+      `;
+      box.onclick = () => selectPlan(index, box);
+      plansGrid.appendChild(box);
+    });
+
+    function selectPlan(index, element) {
+      document.querySelectorAll(".plan-box").forEach(el => el.classList.remove("selected"));
+      element.classList.add("selected");
+      selectedPlan = coinPlans[index];
+      document.getElementById("selectedPlanText").innerText = `${selectedPlan.coins} Coins`;
+      document.getElementById("totalAmountText").innerText = `₹${selectedPlan.price.toLocaleString('en-IN')}`;
+    }
+
+    // Reset verification if user edits the User ID input
+    document.getElementById("userIdInput").addEventListener("input", () => {
+      isVerified = false;
+      const statusEl = document.getElementById("verifyStatus");
+      statusEl.className = "verify-status";
+      statusEl.innerText = "";
+    });
+
+    function verifyUserId() {
+      const uid = document.getElementById("userIdInput").value.trim();
+      const statusEl = document.getElementById("verifyStatus");
+      if (uid.length < 3) {
+        isVerified = false;
+        statusEl.className = "verify-status error";
+        statusEl.innerText = "❌ Please enter a valid Duoo or Doran User ID.";
+        return;
+      }
+      isVerified = true;
+      statusEl.className = "verify-status success";
+      statusEl.innerText = `✓ Verified User ID: ${uid}`;
+    }
+
+    function handleBuyNow() {
+      const uid = document.getElementById("userIdInput").value.trim();
+      if (!uid || !isVerified) {
+        alert("कृपया पहले अपना User ID डालकर Verify बटन दबाएं।");
+        return;
+      }
+      if (!selectedPlan) {
+        alert("कृपया पहले कोई कॉइन प्लान चुनें।");
+        return;
+      }
+      if (!document.getElementById("acceptTerms").checked) {
+        alert("कृपया आगे बढ़ने के लिए Terms & Conditions स्वीकार करें।");
+        return;
+      }
+      document.getElementById("instructionModal").classList.add("active");
+    }
+
+    function openQrModal() {
+      closeModal("instructionModal");
+      const uid = document.getElementById("userIdInput").value.trim();
+      const amount = selectedPlan.price;
+      const planText = `${selectedPlan.coins} Coins`;
+
+      document.getElementById("qrAmountDisplay").innerText = `₹${amount.toLocaleString('en-IN')}`;
+      document.getElementById("qrUserIdDisplay").innerText = uid;
+      document.getElementById("qrPlanDisplay").innerText = planText;
+
+      // Reset UTR section for fresh order
+      document.getElementById("utrInput").value = "";
+      const utrStatus = document.getElementById("utrStatus");
+      utrStatus.className = "utr-status";
+      utrStatus.innerText = "";
+      document.getElementById("utrSuccessBox").classList.remove("active");
+
+      // UPI deep link with exact amount & User ID note
+      const upiNote = `AS Agency ${planText} ID:${uid}`;
+      const upiUrl = `upi://pay?pa=${encodeURIComponent(MERCHANT_UPI_ID)}&pn=${encodeURIComponent(MERCHANT_NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent(upiNote)}`;
+      document.getElementById("upiDeepLink").href = upiUrl;
+
+      // Try upi-qr.png -> upi-qr.jpg -> generated dynamic QR fallback
+      const qrImg = document.getElementById("upiQrImg");
+      qrImg.dataset.step = "png";
+      qrImg.onerror = function () {
+        if (this.dataset.step === "png") {
+          this.dataset.step = "jpg";
+          this.src = "upi-qr.jpg";
+        } else {
+          this.onerror = null;
+          this.src = `https://api.qrserver.com/v1/create-qr-code/?size=230x230&data=${encodeURIComponent(upiUrl)}`;
+        }
+      };
+      qrImg.src = "upi-qr.png";
+
+      document.getElementById("copyUpiBtn").innerText = "Copy";
+      document.getElementById("qrModal").classList.add("active");
+      startCountdown(300); // 5 Minutes
+    }
+
+    function submitUtrPayment() {
+      const uid = document.getElementById("userIdInput").value.trim();
+      const utrRaw = document.getElementById("utrInput").value.trim().replace(/\s+/g, "");
+      const utrStatus = document.getElementById("utrStatus");
+
+      if (!/^[A-Za-z0-9]{12,24}$/.test(utrRaw)) {
+        utrStatus.className = "utr-status error";
+        utrStatus.innerText = "❌ कृपया सही 12-अंकों का UTR / UPI Reference नंबर दर्ज करें।";
+        return;
+      }
+
+      utrStatus.className = "utr-status";
+      utrStatus.innerText = "";
+      clearInterval(timerInterval);
+
+      const amount = selectedPlan.price;
+      const planText = `${selectedPlan.coins} Coins`;
+      const amountFormatted = `₹${amount.toLocaleString('en-IN')}`;
+
+      document.getElementById("confUserId").innerText = uid;
+      document.getElementById("confPlan").innerText = planText;
+      document.getElementById("confAmount").innerText = amountFormatted;
+      document.getElementById("confUtr").innerText = utrRaw;
+
+      const plainWaText =
+        `Hello AS Agency,\n` +
+        `I have completed my UPI payment.\n\n` +
+        `*User ID:* ${uid}\n` +
+        `*Plan:* ${planText}\n` +
+        `*Amount Paid:* ${amountFormatted}\n` +
+        `*UTR / Ref No.:* ${utrRaw}\n\n` +
+        `Please verify and credit the coins.`;
+
+      const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(plainWaText)}`;
+      document.getElementById("whatsappFallbackLink").href = waUrl;
+      document.getElementById("utrSuccessBox").classList.add("active");
+
+      window.open(waUrl, "_blank", "noopener,noreferrer");
+    }
+
+    function copyUpiId() {
+      const btn = document.getElementById("copyUpiBtn");
+      const markCopied = () => {
+        btn.innerText = "Copied!";
+        setTimeout(() => { btn.innerText = "Copy"; }, 2000);
+      };
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(MERCHANT_UPI_ID).then(markCopied).catch(() => fallbackCopy(markCopied));
+      } else {
+        fallbackCopy(markCopied);
+      }
+    }
+
+    function fallbackCopy(callback) {
+      const temp = document.createElement("textarea");
+      temp.value = MERCHANT_UPI_ID;
+      temp.style.position = "fixed";
+      temp.style.opacity = "0";
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand("copy");
+      document.body.removeChild(temp);
+      callback();
+    }
+
+    function closeQrModal() {
+      clearInterval(timerInterval);
+      closeModal("qrModal");
+    }
+
+    function startCountdown(seconds) {
+      clearInterval(timerInterval);
+      let remaining = seconds;
+      const display = document.getElementById("countdownText");
+
+      const updateDisplay = () => {
+        const mins = String(Math.floor(remaining / 60)).padStart(2, "0");
+        const secs = String(remaining % 60).padStart(2, "0");
+        display.innerText = `${mins}:${secs}`;
+      };
+
+      updateDisplay();
+      timerInterval = setInterval(() => {
+        remaining--;
+        if (remaining < 0) {
+          clearInterval(timerInterval);
+          display.innerText = "Expired";
+          return;
+        }
+        updateDisplay();
+      }, 1000);
+    }
+
+    // Hamburger Menu Toggle
+    const menuBtn = document.getElementById("menuBtn");
+    const navDrawer = document.getElementById("navDrawer");
+
+    menuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      navDrawer.classList.toggle("open");
+    });
+
+    document.addEventListener("click", () => {
+      navDrawer.classList.remove("open");
+    });
+
+    function scrollToCoins() {
+      navDrawer.classList.remove("open");
+      document.getElementById("coinsSection").scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Menu Info Modals
+    function openInfoModal(type) {
+      navDrawer.classList.remove("open");
+      const title = document.getElementById("infoModalTitle");
+      const body = document.getElementById("infoModalBody");
+
+      if (type === "terms") {
+        title.innerText = "📜 Terms & Conditions";
+        body.innerHTML = `<p>Welcome to <strong>AS Agency</strong>. All coin packs are delivered to verified User IDs.</p>
+        <p>Please verify your exact Duoo or Doran User ID before completing payment. AS Agency is not responsible for coins sent to an incorrect User ID entered by the customer.</p>`;
+      } else if (type === "policy") {
+        title.innerText = "🔒 Privacy Policy";
+        body.innerHTML = `<p>Your privacy and data security are strictly protected at <strong>AS Agency</strong>.</p>
+        <p>We never share customer data with third parties. Your User ID and transaction details are used strictly for delivering your purchased coins.</p>`;
+      } else if (type === "refund") {
+        title.innerText = "🔄 Refund & Cancellation Policy";
+        body.innerHTML = `<p>Digital coins once delivered to a verified User ID cannot be reversed or refunded.</p>
+        <p>For any payment deduction issue where coins were not credited, please contact our support team immediately with your payment screenshot and UTR number.</p>`;
+      } else if (type === "contact") {
+        title.innerText = "🎧 Contact Us — AS Agency";
+        body.innerHTML = `
+          <p><strong>WhatsApp Support:</strong> <a href="https://wa.me/917080921179" target="_blank" rel="noopener noreferrer" style="color:#4ade80;">+917080921179</a></p>
+          <p><strong>Email:</strong> <a href="mailto:arpit.s.9rt@gmail.com" style="color:#4ade80;">arpit.s.9rt@gmail.com</a></p>
+          <p><strong>Support Timing:</strong> 10:00 AM to 10:00 PM</p>
+        `;
+      }
+
+      document.getElementById("infoModal").classList.add("active");
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove("active");
+    }
+
+    // Close modal when clicking backdrop or pressing Escape
+    document.querySelectorAll(".modal-overlay").forEach(overlay => {
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) {
+          if (overlay.id === "qrModal") {
+            closeQrModal();
+          } else {
+            closeModal(overlay.id);
+          }
+        }
+      });
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeModal("infoModal");
+        closeModal("instructionModal");
+        closeQrModal();
+      }
+    });
+  </script>
+</body>
+</html>
